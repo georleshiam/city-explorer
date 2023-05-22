@@ -3,14 +3,16 @@ import './App.css';
 import axios from "axios";
 import {useState} from 'react';
 
-
+<body/>
 function App() {
   
   // let cityName = "Dallas, Dallas County, Texas, USA"
   const [cityName, setCityName] = useState("Memphis Memphis Memphis")
-  const [cityLat, setCityLat] = useState("Memphis Memphis Memphis")
-  const [cityLon, setCityLon] = useState("Memphis Memphis Memphis")
+  const [cityLat, setCityLat] = useState(47)
+  const [cityLon, setCityLon] = useState(28)
 
+  let url = `https://maps.locationiq.com/v3/staticmap?key=pk.b6d3832ae317acf0353a11f5e0a49041&center=${cityLat},${cityLon}`
+  console.log(url)
 
   return (
     <div className="App">
@@ -48,7 +50,7 @@ function App() {
           <h1>{cityName}</h1>
           <h1>{cityLat}</h1>
           <h1>{cityLon}</h1>
-
+          <img src={url} />
 
       </header>
     </div >
