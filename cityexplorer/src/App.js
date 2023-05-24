@@ -11,10 +11,13 @@ function App() {
   const [cityLat, setCityLat] = useState(47)
   const [cityLon, setCityLon] = useState(28)
   const [error, setError] = useState(null)
+  const [weatherData, setWeatherData] = useState([ {date: "1/12/22", description: "test description"} ])
+  const [errorAPI, setErrorAPI] = useState(500)
+
 
   let url = `https://maps.locationiq.com/v3/staticmap?key=pk.b6d3832ae317acf0353a11f5e0a49041&center=${cityLat},${cityLon}`
-  console.log(url)
-
+  // console.log(url)
+  let weatherDataHTML = weatherData.map((element)=>{ return <h1>{element.description}</h1>})
   return (
     <div className="App">
       <header className="App-header">
@@ -22,9 +25,9 @@ function App() {
         <p>
           {/* Edit <code>src/App.js</code> and save to reload. */}
           <form onSubmit={function (event) {
-            // console.log(event.target[0].value)
+            console.log(event.target[0].value)
             let userinput = event.target[0].value
-            console.log(userinput)
+            // console.log(userinput)
             event.preventDefault()
             
           // let weather = `http://localhost:3001/weather?lat=11&lon=11&searchQuery=Paris`
@@ -32,14 +35,6 @@ function App() {
 
             response.then(function (res) {
               let citydata = res.data[0]
-              // let weather response = axios.get(weather)
-              // console.log(weatherResponse)
-              // console.log(citydata)
-              // console.log(citydata.display_name)
-              // console.log(citydata.lat)
-              // console.log(citydata.lon)
-
-
 
               // // cityName = citydata.display_name
                setCityName(citydata.display_name)
@@ -48,6 +43,16 @@ function App() {
 
  
             }).catch (function (error)  {
+              setError(error.message)
+
+            })
+
+            let weatherResponse = axios.get('http://localhost:3001/weather?searchQuery='+ userinput)
+            weatherResponse.then(function (res){
+              setWeatherData(res.data)
+                console.log(res.data)
+                
+            }).catch(function(err){
               setError(error.message)
 
             })
@@ -62,6 +67,7 @@ function App() {
         <h1>{cityLat}</h1>
         <h1>{cityLon}</h1>
         <img src={url} />
+        {weatherDataHTML}
         <h1>{error}</h1>
       </header>
     </div >
