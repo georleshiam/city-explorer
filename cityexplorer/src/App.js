@@ -13,7 +13,11 @@ function App() {
   const [error, setError] = useState(null)
   const [weatherData, setWeatherData] = useState([ {date: "1/12/22", description: "test description"} ])
   const [errorAPI, setErrorAPI] = useState(500)
+  const [movieData, setMovieData] = useState([])
 
+  let movieDataHTML = movieData.map(function(element){
+    return <h1>{element.original_title}</h1>
+  })
 
   let url = `https://maps.locationiq.com/v3/staticmap?key=pk.b6d3832ae317acf0353a11f5e0a49041&center=${cityLat},${cityLon}`
   // console.log(url)
@@ -47,7 +51,7 @@ function App() {
 
             })
 
-            let weatherResponse = axios.get('http://localhost:3001/weather?searchQuery='+ userinput)
+            let weatherResponse = axios.get('https://city-explorer-api-juty.onrender.com/weather?searchQuery=Memphis'+ userinput)
             weatherResponse.then(function (res){
               setWeatherData(res.data)
                 console.log(res.data)
@@ -56,6 +60,19 @@ function App() {
               setError(error.message)
 
             })
+
+            let movieResponse = axios.get('https://city-explorer-api-juty.onrender.com/movies?movie='+ userinput)
+            movieResponse.then(function (res){
+              console.log("Test")
+              setMovieData(res.data)
+                console.log(res.data)
+                
+            }).catch(function(err){
+              setError(error.message)
+
+            })
+
+            
           }}>
             <input />
 
@@ -68,6 +85,7 @@ function App() {
         <h1>{cityLon}</h1>
         <img src={url} />
         {weatherDataHTML}
+        {movieDataHTML}
         <h1>{error}</h1>
       </header>
     </div >
