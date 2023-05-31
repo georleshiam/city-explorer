@@ -2,8 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
 import { useState } from 'react';
+import Weatherday from './weather.js';
+import Movie from './movie.js';
 
-<body />
+
 function App() {
 
   // let cityName = "Dallas, Dallas County, Texas, USA"
@@ -15,13 +17,13 @@ function App() {
   const [errorAPI, setErrorAPI] = useState(500)
   const [movieData, setMovieData] = useState([])
 
-  let movieDataHTML = movieData.map(function(element){
-    return <h1>{element.original_title}</h1>
-  })
+  let movieDataHTML = movieData.map((element)=>{ return <Movie data= {element.original_title} />})
+  
+  
 
   let url = `https://maps.locationiq.com/v3/staticmap?key=pk.b6d3832ae317acf0353a11f5e0a49041&center=${cityLat},${cityLon}`
   // console.log(url)
-  let weatherDataHTML = weatherData.map((element)=>{ return <h1>{element.description}</h1>})
+  let weatherDataHTML = weatherData.map((element)=>{ return <Weatherday date= {element.description} />})
   return (
     <div className="App">
       <header className="App-header">
